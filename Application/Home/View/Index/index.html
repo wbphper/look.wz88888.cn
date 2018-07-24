@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>走势图</title>
+	<link rel="stylesheet" type="text/css" href="__CSS__/index.css">
+	<script src="__JS__/jquery.js"></script>
+</head>
+<body>
+
+<div class="content">
+	<div class="list_t">
+
+		<div class="l_t_t">
+			<div class="qihao">期号</div>
+			<div class="qihao">开奖号码</div>
+		</div>
+        
+        <volist name="res" id="v">
+			<div class="l_t_c">
+				<div class="qh_show">
+					<div class="qh_show_n">{$v['number']}</div>
+					<div class="qh_show_c">{$v['data']}</div>
+				</div>
+			</div>
+		</volist>
+
+		<div class="l_t_t">
+			<div class="qihao">期号</div>
+			<div class="qihao">开奖号码</div>
+		</div>
+
+	</div>
+
+    <volist name="info" id="v">
+
+		<div class="list">
+			<div class="l_title">
+				<div class="zymshow">{$v['id']}、左码:{$v['left']}&nbsp;&nbsp;右码:{$v['right']}</div>
+				<div class="gsbqw">
+					<div class="gsbqw_l">万位</div>
+					<div class="gsbqw_l">千位</div>
+					<div class="gsbqw_l">百位</div>
+					<div class="gsbqw_l">十位</div>
+					<div class="gsbqw_l">个位</div>
+				</div>
+			</div>
+            
+            <volist name="v['n']" id="vv">
+
+				<div class="l_number">
+					<div class="l_number_s {$vv['w']['C']}">
+						<div class="{$vv['w']['class']}">{$vv['w']['num']}</div>
+					</div>
+					<div class="l_number_s {$vv['q']['C']}">
+						<div class="{$vv['q']['class']}">{$vv['q']['num']}</div>
+					</div>
+					<div class="l_number_s {$vv['b']['C']}">
+						<div class="{$vv['b']['class']}">{$vv['b']['num']}</div>
+					</div>
+					<div class="l_number_s {$vv['s']['C']}">
+						<div class="{$vv['s']['class']}">{$vv['s']['num']}</div>
+					</div>
+					<div class="l_number_s {$vv['g']['C']}">
+						<div class="{$vv['g']['class']}">{$vv['g']['num']}</div>
+					</div>
+				</div>
+
+			</volist>
+
+			<div class="l_title">
+				<div class="gsbqw">
+					<div class="gsbqw_l">万位</div>
+					<div class="gsbqw_l">千位</div>
+					<div class="gsbqw_l">百位</div>
+					<div class="gsbqw_l">十位</div>
+					<div class="gsbqw_l">个位</div>
+				</div>
+				<div class="zymshow">{$v['id']}、左码:{$v['left']}&nbsp;&nbsp;右码:{$v['right']}</div>
+			</div>
+
+		</div>
+
+    </volist>
+
+</div>
+
+</body>
+</html>

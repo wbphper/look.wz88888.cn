@@ -1,0 +1,120 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class IndexController extends Controller 
+{
+    public function index()
+    {
+    	$url = "http://admin.wz88888.cn/other/other.php";
+		$data = ['type'=>1];
+		$infos = $this->http_post($url, $data);
+		$res = json_decode(base64_decode($infos), true);
+
+		$list = M('code')->where(['status'=>1])->order('id ASC')->select();
+		foreach ($list as $k => $v) 
+		{
+			$info[$k]['id'] = $v['id'];
+			$info[$k]['left'] = $v['left'];
+			$info[$k]['right'] = $v['right'];
+			$left = explode(',', $v['left']);
+			$right = explode(',', $v['right']);
+
+			foreach ($res as $kk => $vv) 
+			{
+				$num_arr = explode(',', $vv['data']);
+				$info[$k]['n'][$kk]['w']['num'] = $num_arr[0];
+				$info[$k]['n'][$kk]['q']['num'] = $num_arr[1];
+				$info[$k]['n'][$kk]['b']['num'] = $num_arr[2];
+				$info[$k]['n'][$kk]['s']['num'] = $num_arr[3];
+				$info[$k]['n'][$kk]['g']['num'] = $num_arr[4];
+				foreach ($num_arr as $kkk => $vvv) 
+				{
+					if($kkk == 0)
+					{
+						if(in_array($vvv, $left))
+						{
+							$info[$k]['n'][$kk]['w']['class'] = 'zuoma';
+						}
+						else
+						{
+							$info[$k]['n'][$kk]['w']['class'] = 'youma';
+						}
+					}
+					elseif($kkk == 1)
+					{
+						if(in_array($vvv, $left))
+						{
+							$info[$k]['n'][$kk]['q']['class'] = 'zuoma';
+						}
+						else
+						{
+							$info[$k]['n'][$kk]['q']['class'] = 'youma';
+						}
+					}
+					elseif($kkk == 2)
+					{
+						if(in_array($vvv, $left))
+						{
+							$info[$k]['n'][$kk]['b']['class'] = 'zuoma';
+						}
+						else
+						{
+							$info[$k]['n'][$kk]['b']['class'] = 'youma';
+						}
+					}
+					elseif($kkk == 3)
+					{
+						if(in_array($vvv, $left))
+						{
+							$info[$k]['n'][$kk]['s']['class'] = 'zuoma';
+						}
+						else
+						{
+							$info[$k]['n'][$kk]['s']['class'] = 'youma';
+						}
+					}
+					else
+					{
+						if(in_array($vvv, $left))
+						{
+							$info[$k]['n'][$kk]['g']['class'] = 'zuoma';
+						}
+						else
+						{
+							$info[$k]['n'][$kk]['g']['class'] = 'youma';
+						}
+					}
+				}
+			}
+		}
+
+        $this->assign('info', $info);
+		$this->assign('res', $res);
+        $this->display();
+    }
+
+    private function http_post($url, $data)
+	{
+	    $curl = curl_init();
+	    curl_setopt($curl, CURLOPT_URL, $url);
+	    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+	    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+
+	    if (!empty($data))
+	    {
+	        curl_setopt($curl, CURLOPT_POST, 1);
+	        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+	    }
+	    
+	    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	    $output = curl_exec($curl);
+	    curl_close($curl);
+	    return $output;
+	}
+
+    public function test()
+    {
+    	$info = M('code')->select();
+    	print_r($info);
+    }
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>走势图后台登录</title>
+	<link rel="stylesheet" type="text/css" href="__CSS__/index.css">
+	<script src="__JS__/jquery.js"></script>
+</head>
+<style type="text/css">
+	.content{
+		width: 100%;
+		height: 100%;
+		margin-top: 200px;
+	}
+	.code{
+		margin: 0 auto;
+		margin-top: 10px;
+		width: 400px;
+		height: 50px;
+	}
+
+	.code1{
+		margin: 0 auto;
+		margin-top: 10px;
+		width: 400px;
+		height: 50px;
+		border: 1px solid #15DF68;
+	}
+
+	.code1 > input{
+		width: 400px;
+		height: 50px;
+		border: none;
+		outline: none;
+		float: left;
+		background: #15DF68;
+		color: white;
+		font-size: 18px;
+		cursor: pointer;
+	}
+
+	.left{
+		width: 298px;
+		height: 48px;
+		float: right;
+		border: 1px solid #15DF68;
+	}
+	.left > input{
+		margin: 0;
+		padding: 0;
+		width: 298px;
+		height: 48px;
+		float: left;
+		outline: none;
+		border: none;
+		text-indent: 10px;
+		font-size: 16px;
+	}
+	.right{
+		width: 100px;
+		height: 50px;
+		float: left;
+		background: #15DF68;
+	}
+	.right > input{
+		width: 100px;
+		height: 50px;
+		float: right;
+		padding: 0;
+		margin: 0;
+		outline: none;
+		border: none;
+		background: #15DF68;
+		font-size: 18px;
+		color: white;
+	}
+</style>
+<body>
+<form action="#" method="post">
+	<div class="content">
+		<div class="code">
+			<div class="right">
+				<input type="button" value="账&nbsp;号">
+			</div>
+			<div class="left">
+				<input type="text" name="account" placeholder="请输入账号...">
+			</div>
+		</div>
+
+		<div class="code">
+			<div class="right">
+				<input type="button" value="密&nbsp;码">
+			</div>
+			<div class="left">
+				<input type="password" name="psd" placeholder="请输入密码...">
+			</div>
+		</div>
+
+		<div class="code1">
+			<input type="button" value="登&nbsp;&nbsp;&nbsp;录" class="button">
+		</div>
+
+	</div>
+</form>
+</body>
+<script type="text/javascript">
+	$('.button').click(function(){
+		var account = $('input[name="account"]').val();
+		var psd = $('input[name="psd"]').val();
+		var url = "{:U('Login/checkLogin')}";
+		if(account && psd)
+		{
+			$.ajax({
+				type: "post",
+				url: url,
+				async: false,
+				data: {"account": account, "psd": psd},
+				success:function(data)
+				{
+					if(data == 666)
+					{
+						$('.code1').hide();
+						window.location.href = "{:U('Index/index')}";
+					}
+					else
+					{
+						alert('账号或密码有误！');
+					}
+				}
+			});
+		}
+		else
+		{
+			alert('账号或密码不能为空!');
+		}
+	});
+</script>
+</html>
